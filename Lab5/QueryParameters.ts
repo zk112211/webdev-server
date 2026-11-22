@@ -9,7 +9,12 @@ export default function QueryParameters(app) {
       case "subtract":
         result = parseInt(a) - parseInt(b);
         break;
-      // TODO (On your own §5.2.2.2, graded): case "multiply" and case "divide"
+      case "multiply":
+        result = parseInt(a) * parseInt(b);
+        break;
+      case "divide":
+        result = parseInt(a) / parseInt(b);
+        break;
       default:
         result = "Invalid operation";
     }

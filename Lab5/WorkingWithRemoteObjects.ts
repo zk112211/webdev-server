@@ -7,8 +7,12 @@ const assignment = {
   score: 0,
 };
 
-// TODO (On your own §5.2.3.4, graded): a module object with string properties
-// id, name, description, and course
+const module = {
+  id: "M101",
+  name: "Introduction to Express",
+  description: "Create RESTful routes with Node.js and Express",
+  course: "CS5610",
+};
 
 export default function WorkingWithRemoteObjects(app) {
   const getAssignment = (req, res) => {
@@ -22,12 +26,39 @@ export default function WorkingWithRemoteObjects(app) {
     assignment.title = newTitle;
     res.json(assignment);
   };
-  // TODO (On your own §5.2.3.4): routes that update the assignment's score and
-  // completed properties
-  // TODO (On your own §5.2.3.4, graded): GET /lab5/module (the object) and
-  // GET /lab5/module/name (its name), plus routes that update the module's name
-  // and description
+  const setAssignmentScore = (req, res) => {
+    const { newScore } = req.params;
+    assignment.score = parseInt(newScore);
+    res.json(assignment);
+  };
+  const setAssignmentCompleted = (req, res) => {
+    const { newCompleted } = req.params;
+    assignment.completed = newCompleted === "true";
+    res.json(assignment);
+  };
+  const getModule = (req, res) => {
+    res.json(module);
+  };
+  const getModuleName = (req, res) => {
+    res.json(module.name);
+  };
+  const setModuleName = (req, res) => {
+    const { newName } = req.params;
+    module.name = newName;
+    res.json(module);
+  };
+  const setModuleDescription = (req, res) => {
+    const { newDescription } = req.params;
+    module.description = newDescription;
+    res.json(module);
+  };
   app.get("/lab5/assignment/title/:newTitle", setAssignmentTitle);
+  app.get("/lab5/assignment/score/:newScore", setAssignmentScore);
+  app.get("/lab5/assignment/completed/:newCompleted", setAssignmentCompleted);
   app.get("/lab5/assignment/title", getAssignmentTitle);
   app.get("/lab5/assignment", getAssignment);
+  app.get("/lab5/module/name/:newName", setModuleName);
+  app.get("/lab5/module/description/:newDescription", setModuleDescription);
+  app.get("/lab5/module/name", getModuleName);
+  app.get("/lab5/module", getModule);
 }

@@ -8,6 +8,8 @@ import db from "./Kambaz/Database";
 import UserRoutes from "./Kambaz/Users/routes";
 import CourseRoutes from "./Kambaz/Courses/routes";
 import ModuleRoutes from "./Kambaz/Modules/routes";
+import AssignmentRoutes from "./Kambaz/Assignments/routes";
+import EnrollmentRoutes from "./Kambaz/Enrollments/routes";
 
 const app = express();
 app.use(
@@ -34,8 +36,8 @@ app.use(express.json());
 UserRoutes(app, db);
 CourseRoutes(app, db);
 ModuleRoutes(app, db);
-// TODO (On your own §5.4.7): AssignmentRoutes(app, db) for assignment CRUD
-// TODO (On your own §5.4.8): EnrollmentRoutes(app, db) for enroll / unenroll
+AssignmentRoutes(app, db);
+EnrollmentRoutes(app, db);
 Lab5(app);
 Hello(app);
 

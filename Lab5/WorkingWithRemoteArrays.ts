@@ -1,4 +1,9 @@
-let todos = [
+let todos: {
+  id: number;
+  title: string;
+  completed: boolean;
+  description?: string;
+}[] = [
   { id: 1, title: "Task 1", completed: false },
   { id: 2, title: "Task 2", completed: true },
   { id: 3, title: "Task 3", completed: false },
@@ -68,15 +73,26 @@ export default function WorkingWithRemoteArrays(app) {
     );
     res.sendStatus(200);
   };
-  // TODO (On your own §5.2.4.7): handlers for
-  // /lab5/todos/:id/completed/:completed and /lab5/todos/:id/description/:description
-  // (both respond with todos)
+  const updateTodoCompleted = (req, res) => {
+    const { id, completed } = req.params;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    todo.completed = completed === "true";
+    res.json(todos);
+  };
+  const updateTodoDescription = (req, res) => {
+    const { id, description } = req.params;
+    const todo = todos.find((t) => t.id === parseInt(id));
+    todo.description = description;
+    res.json(todos);
+  };
 
   app.get("/lab5/todos/create", createNewTodo);
   app.post("/lab5/todos", postNewTodo);
   app.get("/lab5/todos/:id/delete", removeTodo);
   app.delete("/lab5/todos/:id", deleteTodo);
   app.get("/lab5/todos/:id/title/:title", updateTodoTitle);
+  app.get("/lab5/todos/:id/completed/:completed", updateTodoCompleted);
+  app.get("/lab5/todos/:id/description/:description", updateTodoDescription);
   app.put("/lab5/todos/:id", updateTodo);
   app.get("/lab5/todos/:id", getTodoById);
   app.get("/lab5/todos", getTodos);
